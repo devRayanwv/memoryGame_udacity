@@ -133,7 +133,7 @@ function addToOpenedCards(card) {
             lockedCards(openedCards);
         } else {
             // if the cards are not matched, then we will close the cards and remove them from the list
-            var delayInMilliseconds = 1000; // 1 second
+            var delayInMilliseconds = 300; // 1 second
                 openedCards[0].className = 'card show open';
                 openedCards[1].className = 'card show open';
             setTimeout(function() {
