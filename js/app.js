@@ -23,18 +23,24 @@
 /*
  * Create a list that holds all of your cards
  */
-var cards = ['paper-plane-o', 'anchor', 'bolt', 'cube', 'anchor', 'leaf',
+let cards = ['paper-plane-o', 'anchor', 'bolt', 'cube', 'anchor', 'leaf',
     'bicycle', 'diamond', 'bomb', 'leaf', 'bomb', 'bolt', 'bicycle', 'paper-plane-o', 'cube', 'diamond'];
-var openedCards = [];
-var lockedCardsList = []; // This list to contains matched cards
-var restartButton = document.querySelector('.restart');
-var deck = document.querySelector('.deck');
-var moves = document.querySelector('.moves');
-var counter = 0;
-var finalMessage = document.querySelector('.final-message');
+let openedCards = [];
+let lockedCardsList = []; // This list to contains matched cards
+let restartButton = document.querySelector('.restart');
+let deck = document.querySelector('.deck');
+let moves = document.querySelector('.moves');
+let counter = 0;
+let finalMessage = document.querySelector('.final-message');
+let modal = document.getElementById('myModal');
+let closeBtn = document.getElementsByClassName('close')[0];
+let stars = document.querySelector('.stars');
+let starsInModal = document.querySelectorAll('.stars')[1];
+let playAgain = document.getElementById('playAgain');
 
 moves.innerHTML = counter;
 setupCards();
+modal.style.display = 'block';
 
 /**
 * @description  Increament the move number.
@@ -43,6 +49,18 @@ setupCards();
 */
 function increamnetMoveNumber() {
     moves.innerHTML = ++counter;
+
+    // To remove one start after move 10 and 17
+    if(counter === 10)
+    {
+        stars.removeChild(stars.childNodes[0]);
+        starsInModal.removeChild(starsInModal.childNodes[0]);
+    }
+    else if(counter === 17)
+    {
+        stars.removeChild(stars.childNodes[0]);
+        starsInModal.removeChild(starsInModal.childNodes[0]);
+    }
 }
 
 /**
@@ -51,8 +69,26 @@ function increamnetMoveNumber() {
 * @returns NONE
 */
 function displayFinalMessage() {
-    finalMessage.innerHTML = 'You win with the score [' + counter + '].';
+    modal.style.display = 'block';
+    finalMessage.innerHTML = 'You win with the score [' + ++counter + '].';
 }
+
+/**
+* @description  Close model when user click on clode button.
+* @param NONE
+* @returns NONE
+*/
+closeBtn.onclick = function() {
+    modal.style.display = 'none';
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+};
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -69,7 +105,7 @@ TODO :
 */
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -133,7 +169,7 @@ function addToOpenedCards(card) {
             lockedCards(openedCards);
         } else {
             // if the cards are not matched, then we will close the cards and remove them from the list
-            var delayInMilliseconds = 300; // 1 second
+            let delayInMilliseconds = 300; // 1 second
                 openedCards[0].className = 'card show open';
                 openedCards[1].className = 'card show open';
             setTimeout(function() {
@@ -156,12 +192,15 @@ function addToOpenedCards(card) {
 * @returns NONE
 */
 function setupCards() {
-    var li;
-    var i;
+    let li;
+    let i;
     counter = 0;
     moves.innerHTML = counter;
     openedCards = [];
     lockedCardsList = [];
+    stars.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
+    starsInModal.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
+
     finalMessage.innerHTML = '';
     deck.innerHTML = '';
     cards = shuffle(cards);
@@ -184,15 +223,20 @@ function setupCards() {
 */
 restartButton.addEventListener('click', function(){
     setupCards();
+    console.log('hi');
 });
 
+playAgain.addEventListener('click', function(){
+    setupCards();
+    modal.style.display = 'none';
+});
 
 deck.addEventListener('click', function(event){
 
     // I don't like the idea of creating EventListener funcrion for each card
     // So, I tried to do one function that handled all click events based on (event.target) attributes
 
-    var clickedCard;
+    let clickedCard;
     // Check if the <li> tag has been clicked
     if (event.target.tagName === 'LI')
     {

@@ -16,18 +16,26 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+        	<ul class="stars"></ul>
 
         	<span class="moves"></span> Moves
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
         	</div>
-            <div class="final-message"></div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                 <!-- Modal content -->
+                <div class="modal-content">
+                     <span class="close">&times;</span>
+                    <div class="game-details">
+                        <p>~~~ You Won ~~~</p>
+                        <div class="final-message"></div>
+                        <p>Stars: <ul class="stars"></ul></p>
+                         <button id="playAgain" value="Play Again" <i class="fa fa-repeat"></i> Play Again!!</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <ul class="deck">
