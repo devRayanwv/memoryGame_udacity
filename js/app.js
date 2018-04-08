@@ -40,7 +40,7 @@ let playAgain = document.getElementById('playAgain');
 
 moves.innerHTML = counter;
 setupCards();
-modal.style.display = 'block';
+modal.style.display = 'none';
 
 /**
 * @description  Increament the move number.
