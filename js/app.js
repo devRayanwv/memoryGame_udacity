@@ -37,7 +37,28 @@ let closeBtn = document.getElementsByClassName('close')[0];
 let stars = document.querySelector('.stars');
 let starsInModal = document.querySelectorAll('.stars')[1];
 let playAgain = document.getElementById('playAgain');
+let minutesLabel = document.getElementById('minutes');
+let secondsLabel = document.getElementById('seconds');
+let totalSeconds = 0;
+let finalMinus = document.querySelector('.finalMinutes');
+let finalSecond = document.querySelector('.finalSecond');
 
+// This snip code from https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
+setInterval(setTime, 1000);
+function setTime() {
+    ++totalSeconds;
+    secondsLabel.innerHTML = pad(totalSeconds % 60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+    let valString = val + '';
+    if (valString.length < 2) {
+        return '' + valString;
+    } else {
+        return valString;
+    }
+}
 moves.innerHTML = counter;
 setupCards();
 modal.style.display = 'none';
@@ -71,6 +92,8 @@ function increamnetMoveNumber() {
 function displayFinalMessage() {
     modal.style.display = 'block';
     finalMessage.innerHTML = 'You win with the score [' + ++counter + '].';
+    finalSecond.innerHTML = secondsLabel.childNodes[0].data;
+    finalMinus.innerHTML = minutesLabel.childNodes[0].data;
 }
 
 /**
